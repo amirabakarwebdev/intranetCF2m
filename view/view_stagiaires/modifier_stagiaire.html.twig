@@ -20,12 +20,14 @@
                 {# Affichage du formulaire #}
                 
                     <form action="" method="post" name="updateLeStagiaire">
-                    <input name="lenom" type="text" placeholder="nom de famille" value="{{ section.lenomFamille }}" required><br>
+                    <input name="lenom" type="text" placeholder="nom de famille" value="{{ section.nomFamille }}" required><br>
                     <textarea name="leprenom" placeholder="le prenom" required>{{ section.leprenom }}</textarea><br>
-                    <textarea name="lenom" placeholder="lemail" required>{{ section.lemail }}</textarea><br>
-                    <textarea name="lenom" placeholder="lafiliere" required>{{ section.filiereName }}</textarea><br>
-                    <textarea name="lenomutilisateur" placeholder="la session" required>{{ section.sessionName }}</textarea><br>
-                    <textarea name="lemail" placeholder="userName" required>{{ section.lenomutilisateur }}</textarea><br>
+                    <textarea name="lemail" placeholder="lemail" required>{{ section.lemail }}</textarea><br>
+
+                    <textarea name="lafiliere" placeholder="lafiliere" required>{{ section.filiereName }}</textarea><br>
+                    <textarea name="lasession" placeholder="la session" required>{{ section.sessionName }}</textarea><br>
+                    <textarea name="userName" placeholder="userName" required>{{ section.lenomutilisateur }}</textarea><br>
+
                     <input type="hidden" name="idlutilisateur" value="{{ section.idlutilisateur }}">
                     <input type="submit" value="Envoyer">
                 </form>

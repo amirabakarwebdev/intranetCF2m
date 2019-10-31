@@ -1,0 +1,93 @@
+
+ {# on étend le template depuis base.html.twig, qui est donc son parent #}
+
+{% extends "template.html.twig" %}
+
+{# on veut surcharger le title, on utilise le bloc, on récupère le contenu du parent {{ parent() }} et on rajoute notre texte #}
+{% block title %}
+    {{ parent() }}
+
+    | Accueil evaluation filiere
+
+{% endblock %}
+
+{% block menuhaut %}
+    {% include "hautEtmenu.html.twig" %}
+{% endblock %}
+
+{% block centre %}
+    <!-- Page Content -->
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+
+                <h1 class="mt-5">Rceherche </h1>
+                <p class="lead">rechercher un stagiaire</p>
+
+            </div>
+            
+        </h4>
+    </div>
+    <br>
+    <div
+        class="col-lg-6 text-left">
+{{ pagination|raw }}
+
+        {# Faites apparaître les sections (celles du menu) cliquables dans un nouveau h4, sinon écrivez "Pas encore d'éléments dans le menu" #}
+       
+
+        <div class="col-lg-8 text-left">
+                {# Affichage des bouttons filiere #}
+                <h1>Recherchez un stagiaire pour accéder à son profil:</h1>
+                
+                 <div>
+                 
+                 <form>
+                 <label for="stagiaire">recherchez un stagiaire : </label><input type="text" id="stagiaire" name="idlutilisateur" value="{{user.lenom}}{{user.leprenom}}" />
+                </form> 
+                
+                 </div>
+                
+                <h3>{{ error }}</h3>
+            </div>
+       
+            
+    </div>
+
+    <!-- 1. On ajoute la librairie jQuery -->
+        <script src="jquery-3.3.1.js"></script>
+		
+		<!-- 2. On ajoute la librairie jQuery UI -->
+		<script src="jquery-ui/jquery-ui.js"></script>
+		
+		<!-- 3. Notre script qui utilise jQuery et jQueryUI -->
+		<script type="text/javascript">
+			
+			$("input#stagiaire").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url: "choixstagiaire.php",
+						type: "POST",
+						dataType:"json",
+						data : {
+							param : $("#stagiaire").val()
+							},
+						complete: function(resultat, status) {
+							console.log("COMPLETE : "+ status);
+							},
+						success: function(resultat) { 
+							console.log("SUCCESS : " + resultat);
+							response(resultat);
+							},
+						error: function(resultat, status, erreur) {
+							console.log(erreur);
+							}	
+					});
+				}
+			});
+			
+		</script>
+
+
+</div></main>{% endblock %}{% block bas %}{% include "footer.html.twig" %}{% endblock %}
+

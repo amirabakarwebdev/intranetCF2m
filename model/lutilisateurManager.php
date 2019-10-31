@@ -71,7 +71,7 @@ class lutilisateurManager {
 		WHERE
 			idlutilisateur = :id;";
         $sqlQuery = $this->db->prepare($sql);
-        $sqlQuery->bindValue(":id", $user->getIdutilisateur(), PDO::PARAM_INT);
+        $sqlQuery->bindValue(":id", $user->getIdlutilisateur(), PDO::PARAM_INT);
         $sqlQuery->execute();
     }
     public function lutilisateurDelete(lutilisateur $user): void {
@@ -82,7 +82,7 @@ class lutilisateurManager {
 		WHERE
 			idlutilisateur = :id;";
         $sqlQuery = $this->db->prepare($sql);
-        $sqlQuery->bindValue(":id", $user->getIdutilisateur(), PDO::PARAM_INT);
+        $sqlQuery->bindValue(":id", $user->getIdlutilisateur(), PDO::PARAM_INT);
         $sqlQuery->execute();
     }
     public function lutilisateurSelectAll(): array {
@@ -182,7 +182,7 @@ class lutilisateurManager {
         $sql="UPDATE lutilisateur SET lemotdepasse = ?  WHERE idlutilisateur = ?;";
         $insert = $this->db->prepare($sql);
         $insert->bindvalue(1, $user->getLemotdepasse(),PDO::PARAM_STR);
-        $insert->bindvalue(2, $user->getIdutilisateur(),PDO::PARAM_STR);
+        $insert->bindvalue(2, $user->getIdlutilisateur(),PDO::PARAM_STR);
         try{
             $insert->execute();
             return true;
@@ -273,7 +273,7 @@ WHERE l.idlutilisateur = :id
             return [];
         }
     }
-    function updateUserandlore(lutilisateur $utilisateur,string $idlore) {
+    function updateUserandlore(lutilisateur $utilisateur, $idlore) {
 
 
         $this->db->beginTransaction();
@@ -310,15 +310,12 @@ WHERE l.idlutilisateur = :id
 
 
 
-
                 $id = (int) $idlore;
 
-                $sql .= "(".$utilisateur->getIdlutilisateur().",$id),";
+                $sql .= "(".$utilisateur->getIdlutilisateur().",$id)";
 
 
 
-            $sql = substr($sql, 0, -1);
-            s($sql);
 
             $this->db->exec($sql);
 
@@ -334,6 +331,15 @@ WHERE l.idlutilisateur = :id
             echo '<h2 style="color: red;">ERROR: ' . $ex->getMessage() . '</h2>';
             return false;
         }
+    }
+
+
+    public function UserDelete(int $id):void
+    {
+        $sql = "DELETE FROM lutilisateur WHERE idlutilisateur=?";
+        $req = $this->db->prepare($sql);
+        $req->bindValue(1, $id, PDO::PARAM_INT);
+        $req->execute();
     }
 
 }

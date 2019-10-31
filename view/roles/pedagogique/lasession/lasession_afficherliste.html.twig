@@ -1,0 +1,56 @@
+{# on étend le template depuis base.html.twig, qui est donc son parent #}
+{% extends "template.html.twig" %}
+
+{# on veut surcharger le title, on utilise le bloc, on récupère le contenu du parent {{ parent() }} et on rajoute notre texte #}
+{% block title %}{{ parent() }} | Accueil filiere{% endblock %}
+
+{% block menuhaut %}
+
+{% endblock %}
+
+{% block centre %}
+    <!-- Page Content -->
+<main role="main" class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="mt-5">Administration du CF2m</h1>
+                <p class="lead">Gestion des sessions</p>               
+            </div>
+            <div class="col-lg-12 text-center">
+            <h4><a href="?insertlasession">Ajouter une session</a></h4> 
+            </div>
+            <br>
+            <div class="col-lg-12 text-left">
+            <div class="pagination">
+				{{ pagination|raw }}
+            </div>
+                {# Faites apparaître les sections (celles du menu) cliquables dans un nouveau h4, sinon écrivez "Pas encore d'éléments dans le menu" #}
+                {% for item in detailsession %}					
+					<div class="section col-lg-12">
+                    <h4 class="mt-3">{{ item.lenom }} | {{ item.lannee }}
+                    <div class="content-menu">
+                        <a href="?updatelasession={{ item.idlasession }}" class="modified">modifier</a>  
+                        <a class="delete" href="javascript:if(window.confirm('Voulez-vous vraiment supprimer cette session ?')) location='./?confirmationdeletelasession={{ item.idlasession }}';">supprimer</a>
+                    </div>
+                    </h4>  
+                    <p>Acronyme : {{ item.lacronyme }}</p>
+					<p>Type session : {{ item.letype == 1 ? "Pré-formation" : "Formation" }} | Filière : TODO | {% if(item.actif) %} Actif {% else %} non actif {% endif %}</p>
+					<p>Début: {{ item.debut }} | Fin: {{ item.fin }}</p>
+                    </div>
+
+					
+                {% else %}
+					<h4 class="mt-3">Pas encore de session sur notre page accueil</h4>
+                {% endfor %}
+				<div class="pagination">
+					{{ pagination|raw }}
+				</div>
+            </div>
+        </div>
+</main>
+
+{% endblock %}
+
+{% block bas %}
+{% include "footer.html.twig" %}
+{% endblock %}

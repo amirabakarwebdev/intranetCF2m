@@ -122,9 +122,11 @@ protected function hydrate (array $tablehydrate ){
 			'ae',
 			'oe'
 		];
-		$nomFormatted = preg_replace($patterns, $replacements, strtolower(implode('.', explode(' ', $lenomutilisateur))));
+		$nomFormatted = preg_replace($patterns, $replacements, strtolower($lenomutilisateur));
 		if(strlen($nomFormatted) <= 80) {
 			$this->lenomutilisateur = $nomFormatted;
+		} else {
+			echo "<h2 style='color: red;'>Cannot create because length sum of first name & last name exceeds 79 characters</h2>";
 		}
     }
 

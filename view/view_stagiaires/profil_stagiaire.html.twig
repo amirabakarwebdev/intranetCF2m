@@ -18,7 +18,10 @@
             <div class="col-lg-12 text-center">
                 <h1 class="mt-5">PROFIL </h1>
                 <p class="lead">Info stagiaire</p>
-                <p><a href="?ajoutInfo">modifier des infos sur le stagiaire</a></p>
+                
+
+                <p><a href="?modifInfo={{idlutilisateur.idlutilisateur}}">modifier des infos sur le stagiaire</a></p>
+
 
             </div>
             <div<div class="col-lg-12 text-center">
@@ -28,16 +31,23 @@
     <div
         class="col-lg-6 text-left">
 
+
         
-        {% for item in idlutilisateur %}
-            <p class="mt-3" style="color:green;">nom:</p> <h4>{{ item.nomFamille }}</h4> <p style="color:green;">prenom:</p> <h4>{{ item.leprenom }}</h4>
-            <p class="mt-3" style="color:green;">Filiere:</p> <h4>{{ item.filiereName }}</h4>
-            <p class="mt-3" style="color:green;">Rôle:</p> <h4>{{ item.sessionName}}</h4>
-            <p class="mt-3" style="color:green;">Son rôle:</p> <h4>{{ item.lintitule }}</h4>
-            <p class="mt-3" style="color:green;">User Name:</p> <h4>{{ item.lenomutilisateur }}</h4>
-            <p class="mt-3" style="color:green;">Son mail:</p> <h4>{{ item.lemail }}</h4>
+
+        
+
+            <p class="mt-3" style="color:green;">nom:</p> <h4>{{ idlutilisateur.nomFamille }}</h4> <p style="color:green;">prenom:</p> <h4>{{ item.leprenom }}</h4>
+            <p class="mt-3" style="color:green;">Filiere:</p> <h4>{{ idlutilisateur.filiereName }}</h4>
+            <p class="mt-3" style="color:green;">Rôle:</p> <h4>{{ idlutilisateur.sessionName}}</h4>
+            <p class="mt-3" style="color:green;">Son rôle:</p> <h4>{{ idlutilisateur.lintitule }}</h4>
+
+            <p class="mt-3" style="color:green;">User Name:</p> <h4>{{ idlutilisateur.lenomutilisateur }}</h4>
+            <p class="mt-3" style="color:green;">Son mail:</p> <h4>{{ idlutilisateur.lemail }}</h4>
+             <p class="mt-3" style="color:green;">l'inscription:</p> <h4>{{ idlutilisateur.debut }} // {{ idlutilisateur.fin }}</h4>
             
-        {% endfor %}
+        
+
     </div>
     </div>
 </div></main>{% endblock %}{% block bas %}{% include "footer.html.twig" %}{% endblock %}
+

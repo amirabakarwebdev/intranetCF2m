@@ -7,13 +7,14 @@
     {% block menugauche %}
     <!-- menu gauche -->
     <div id="menu-g" class="col-lg-2">
-        <a href="./" title="Retour à l'accueil"><img class="col-lg-12 logo" src="../img/logo.png" alt="logo-cfm2m"/></a>
+        <a href="./" title="Retour à l'accueil"><img class="col-lg-12 logo" src="img/logo.png" alt="logo-cfm2m"/></a>
         <!-- menu rapide -->
+		<center><p>Vous êtes connecté en tant que<br>{{ currentUser }}</p></center>
   <div class='swanky_wrapper'>
     <a id='Dashboard' href="./">
       <label for='Dashboard'>
             <div class="content-img">
-              <img src='../../img/home.png'>
+              <img src='img/home.png'>
             </div>
               <span>Accueil</span>
         </label>
@@ -22,7 +23,7 @@
     <a id='deconnexion' href="?deconnect">
       <label for='Dashboard'>
             <div class="content-img">
-              <img src='../../img/logout.png'>
+              <img src='img/logout.png'>
             </div>
               <span>Déconnexion</span>
         </label>

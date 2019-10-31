@@ -7,7 +7,7 @@ protected $lenom;
 protected $lacronyme;
 protected $lacouleur;
 protected $lepicto;
-protected $actif;
+protected $actif=1;
 
 
 //méthodes
@@ -41,7 +41,7 @@ protected function hydrate (array $tablehydrate ){
      */
     public function getLenom()
     {
-        return $this->lenom;
+        return htmlspecialchars_decode($this->lenom,ENT_QUOTES);
     }
 
     /**
@@ -49,7 +49,7 @@ protected function hydrate (array $tablehydrate ){
      */
   public function getLacronyme()
     {
-        return $this->lacronyme;
+        return htmlspecialchars_decode($this->lacronyme,ENT_QUOTES);
     }
 
      /**
@@ -70,7 +70,7 @@ protected function hydrate (array $tablehydrate ){
 	
 	public function getActif()
     {
-        return htmlspecialchars_decode($this->actif,ENT_QUOTES);
+        return $this->actif;
     }
 
 
@@ -123,10 +123,7 @@ protected function hydrate (array $tablehydrate ){
 
     public function setActif(int $actif)
     {
-        if(!empty($actif)){
-
             $this->actif = $actif;
-        }
     }
 	
 }

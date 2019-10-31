@@ -34,6 +34,7 @@ spl_autoload_register(function ($class) {
 $loader = new \Twig\Loader\FilesystemLoader('../view/');
 $twig = new \Twig\Environment($loader, [
     'debug' => !(PRODUCT),]);
+
 /*
  * Twig's extension for text and debug
  */

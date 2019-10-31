@@ -99,7 +99,7 @@ public function sessionUpdate(lasession $lasession){
 		return false;
 }
 
-	 $sql ="UPDATE lasession SET lenom=?, lacronyme=?, lannee=?, lenumero=?, letype=?, debut=?, fin=?, lafiliere_idfiliere=?, actif=? WHERE idlasession=?";
+	$sql ="UPDATE lasession SET lenom=?, lacronyme=?, lannee=?, lenumero=?, letype=?, debut=?, fin=?, lafiliere_idfiliere=?, actif=? WHERE idlasession=?";
 
 
 	$update = $this->db->prepare($sql);
@@ -191,14 +191,71 @@ public function selectSessionWithLimit(int $pageSession,int $nbParPageSession): 
 
 }
 
+// ***** Référent pédagogique méthodes ***** //
+
+public function sessionDeletePedagogique(int $idlasession){
+
+$sql ="UPDATE lasession SET actif=0 WHERE idlasession=?";
+
+
+	$update = $this->db->prepare($sql);
+	
+	$update->bindValue(1, $idlasession,PDO::PARAM_INT);
+
+	try{
+
+		$update->execute();
+		return true;
+
+	} catch(PDOException $e){
+
+		echo '<h2 style="color: red;">ERROR: ' . $e->getMessage() . '</h2>';
+		return false;
+
+	}
+
 }
 
- 
+public function selectSessionCountPedagogique(): int {
+
+	$sql="SELECT COUNT(idlasession) AS nb
+		  FROM lasession
+		  WHERE actif=1";
+		  
+
+	 $sqlQuery = $this->db->query($sql);
 
 
+	 $recup = $sqlQuery->fetch(PDO::FETCH_ASSOC);
+	 return (int) $recup['nb'];
 
 
-   
+	 $recup= $sqlQuery->fetch(PDO::FETCH_ASSOC);	  
+	 return (int) $recup['nb'];
+
+}
+
+public function selectSessionWithLimitPedagogique(int $pageSession,int $nbParPageSession): array{
 
 
+	$premsLIMIT = ($pageSession-1)*$nbParPageSession;
+	$sql = "
+	SELECT
+		*
+	FROM
+		lasession
+	WHERE actif=1
+	ORDER BY debut
+	LIMIT  ?, ?
+	";
+	$sqlQuery = $this->db->prepare($sql);
+	$sqlQuery->bindValue(1,$premsLIMIT,PDO::PARAM_INT);
+	$sqlQuery->bindValue(2,$nbParPageSession,PDO::PARAM_INT);
+	$sqlQuery->execute();
+	
+	return $sqlQuery->fetchAll(PDO::FETCH_ASSOC);
 
+
+}
+
+}

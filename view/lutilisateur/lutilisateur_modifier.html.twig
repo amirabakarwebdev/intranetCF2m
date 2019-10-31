@@ -48,7 +48,7 @@
                             <label for="idrole"><h6>Role</h6></label>
                            <select id="idrole" name ="idlerole">
                                {% for role in afficheroles %}
-                               <option value="{{ role.idlerole }}">{{ role.lintitule }}</option>
+                               <option value="{{ role.idlerole }}" {{ afficheuser.idlerole == role.idlerole ? 'Selected' }}>{{ role.lintitule }}</option>
                                {% endfor %}
                            </select>
 

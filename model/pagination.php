@@ -27,22 +27,22 @@ class pagination
                 if($i==1) {
                     // si on est sur la page 1, pas de liens, sinon retour à l'accueil et page précédente
                    $sortie.= ($pageActu==1)
-                           ?  "<< < "
-                           :"<a href='?$variableGET=1'><<</a> <a href='?$variableGET=".($pageActu-1)."'><</a> ";
+                           ? "<a class='here' href='#'><<</a><a class='here' href='#'><</a>"
+                           :"<a href='?$variableGET=1'><<</a><a href='?$variableGET=".($pageActu-1)."'><</a>";
 
                 }
 
                 // si on est sur une page, le lien n'est pas cliquable
                 $sortie .= ($i==$pageActu)
-                    ? "$i "
+                    ? "<a class='here' href='#'>$i</a> "
                     : "<a href='?$variableGET=$i'>$i</a> ";
 
                 // si on est au dernier tour de la boucle
                 if($i==$nbPages){
                     $sortie .=
                         ($i==$pageActu)
-                            ? "> >>"
-                            : " <a href='?$variableGET=".($pageActu+1)."'>></a> <a href='?$variableGET=$nbPages'>>></a>"
+                            ? "<a class='here' href='#'>></a><a class='here' href='#'>>></a>"
+                            : " <a href='?$variableGET=".($pageActu+1)."'>></a><a href='?$variableGET=$nbPages'>>></a>"
                     ;
                 }
 

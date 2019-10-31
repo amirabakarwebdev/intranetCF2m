@@ -22,11 +22,13 @@
             </div>
             <div class- class="col-lg-12 text-center">
                     <a class="btn-ajout" href="?insertlafiliere">
-                    <img src="../img/user.png" style="width:25px;"/>Ajouter une filiere</a>
+                    <img src="img/user.png" style="width:25px;"/>Ajouter une filiere</a>
             </div>
             <br>
             <div class="col-lg-12 text-left">
+            <div class="pagination">
                 {{ paginationFiliere|raw }}
+                </div>
                 {# Faites apparaître les sections (celles du menu) cliquables dans un nouveau h4, sinon écrivez "Pas encore d'éléments dans le menu" #}
 				
                 {% for item in detailfiliere %}

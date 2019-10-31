@@ -1,0 +1,21 @@
+.pagination{
+    padding-bottom: 20px;
+}
+.pagination a[href^="?view"]{
+    margin: 5px;
+    padding: 10px;
+    background-color:#14a3f9;
+    color:white;
+}
+.pagination a[href^="#"]{
+    margin: 5px;
+    padding: 10px;
+    background-color:#14a3f9;
+    color:white;
+}
+.pagination a[class^="here"]{
+    margin:5px;
+    padding: 10px;
+    background-color:#302F6C;
+    color: white;
+}
