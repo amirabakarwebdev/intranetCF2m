@@ -1,0 +1,92 @@
+{# On va chercher sur un CDN bootstrap, jquery#}
+
+{# On hérite de base.html.twig#}
+
+{% extends "base.html.twig" %}
+
+{# APPEL DES CSS#}
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/sticky-footer-navbar.css">
+    <link rel="stylesheet" href="css/globale.css">
+    <link type="text/css" rel="stylesheet" href="js/jquery-ui/jquery-ui.css" />
+{% endblock %}
+
+{# APPEL DES JAVASCRIPT #}
+{% block javascripts %}
+<!-- menu rapide -->
+<script src="js/jquery-3.3.1.js"></script>
+<!--<script src="js/jquery.slim.min.js"></script>-->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery-ui/jquery-ui.js"></script>
+
+<!-- lien vers les stats de l'intranet en production -->
+
+ <!-- close msg error box -->
+<script>
+    var close = document.getElementsByClassName("closebtn");
+    var i;
+    for (i = 0; i < close.length; i++) {
+        close[i].onclick = function() {
+            var div = this.parentElement;
+            div.style.opacity = "0";
+            setTimeout(function() {
+                div.style.display = "none";
+            }, 600);
+        }
+    }
+    //disparait après quelques seconde si non cliqué
+    $('#fade').fadeIn().delay(9000).fadeOut('slow');
+</script>
+
+
+{#AJAX pour moteur de recherche#}
+
+
+        <script type="text/javascript">
+
+           $("input#stagiaire").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url: "research.php",
+						type: "POST",
+						dataType:"json",
+						data : {
+							param : $("#stagiaire").val()
+							},
+						complete: function(resultat, status) {
+							console.log("COMPLETE : "+ status);
+							},
+						success: function(resultat) { 
+							console.log("SUCCESS : " + resultat);
+							response(resultat);
+							},
+						error: function(resultat, status, erreur) {
+							console.log(erreur);
+							}	
+					});
+				}
+			});
+                
+
+		</script>
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//statistiques.cf2m.be/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '5']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+
+{% endblock %}
+
+

@@ -61,8 +61,15 @@ switch ($_SESSION['idlerole']) {
 
 // Delete
         if (isset($_GET['confirmationdeletelasession']) && ctype_digit($_GET['confirmationdeletelasession'])) {
-            $lasessionM->sessionDelete($_GET['confirmationdeletelasession']);
-            header('Location: ./?viewlasession');
+
+            $idlasession = (int) $_GET['confirmationdeletelasession'];
+            if(!isset($_GET['ok'])){
+                $sessionById = $lasessionM->sessionSelectByID($idlasession);
+                echo $twig->render("lasession/lasession_delete.html.twig",["affichesession"=>$sessionById]);
+            } else {
+                $lasessionM->sessionDelete($_GET['confirmationdeletelasession']);
+                header("Location: ./?viewlasession");
+            }
 
 // Update
         } else if (isset($_POST['idlasession']) && ctype_digit($_POST['idlasession']) && isset($_POST['lenom']) && isset($_POST['lacronyme']) && isset($_POST['lannee']) && ctype_digit($_POST['lannee']) && isset($_POST['lenumero']) && ctype_digit($_POST['lenumero']) && isset($_POST['letype']) && ctype_digit($_POST['letype']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['lafiliere_idfiliere']) && ctype_digit($_POST['lafiliere_idfiliere'])&& isset($_POST['actif']) && ctype_digit($_POST['actif'])) {

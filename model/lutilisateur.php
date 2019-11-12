@@ -15,8 +15,9 @@ protected $luniqueid;
 
 public function __construct (array $data = [])
 {
+
     if(!empty($data)){       
-        $this->hydrate($data);
+     $this->hydrate($data);
     }
 }
 

@@ -3,10 +3,7 @@
 
 {% block title %}{{ parent() }} | Admin | Modifier linscription{% endblock %}
 
-{% block menuhaut %}
 
-
-{% endblock %}
 
 {% block milieu %}
     <!-- Page Content -->
@@ -20,12 +17,12 @@
             <div class="col-lg-10 text-left">
                 
                 {# Affichage du formulaire d'inscription #}
-                <form action="./?viewlinscription" method="post" name"linscriptioncreate">
+                <form action="./?viewlinscription" method="post" name"updatelinscription">
 
-                    <label for="lutilisateur.idlutilisateur">Nom de l'utilisateur&nbsp</label>
+                    <label for="idla">Nom de l'utilisateur&nbsp</label>
 					<select id="lutilisateur.idlutilisateur" name="lutilisateur.idlutilisateur" required>
                     {% for utilisateur in detailUsers %}
-						<option value="{{ utilisateur_idlutilisateur }}">{{ utilisateur.lenom }} {{utilisateur.leprenom }}</option>
+						<option value="{{ utilisateur.idlutilisateur }}">{{ utilisateur.lenom }} {{utilisateur.leprenom }}</option>
 					{% endfor %}
                     </select><br><br>
                     <label for="lasession.idlasession">Nom de la session&nbsp</label>

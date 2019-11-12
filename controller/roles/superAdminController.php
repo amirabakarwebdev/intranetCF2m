@@ -14,8 +14,14 @@ if (!empty($_GET)) {
 
 // Delete, Update, Insert conditions for congés
 
+<<<<<<< HEAD
     if (isset($_GET['confirmationdeleteleconge']) && ctype_digit($_GET['confirmationdeleteleconge'])) {
         $lecongeM->deleteConge($_GET['confirmationdeleteleconge']);
+=======
+if (isset($_GET['confirmationdeleteleconge']) && ctype_digit($_GET['confirmationdeleteleconge'])) {
+    $lecongeM->deleteConge($_GET['confirmationdeleteleconge']);
+    header("Location: ./?viewleconge");
+>>>>>>> 21097d2ba34099ff381d8224d0d6e521fef5f088
 // Update
     } else if (isset($_POST['idleconge']) && ctype_digit($_POST['idleconge']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['letype']) && ctype_digit($_POST['letype']) && isset($_POST['lasession_idlasession']) && ctype_digit($_POST['lasession_idlasession'])) {
         $leconge = new leconge($_POST);
@@ -33,6 +39,7 @@ if (!empty($_GET)) {
     }
 
 // Display views for conges
+<<<<<<< HEAD
     if (isset($_GET['viewleconge'])) {
         $paginConge = (isset($_GET['pgConge']) ? (int) $_GET['pgConge'] : 1);
         $nbConge = $lecongeM->selectCongeCountById();
@@ -55,6 +62,51 @@ if (!empty($_GET)) {
         } else {
             echo $twig->render('lerole/lerole_ajouter.html.twig');
 
+=======
+if (isset($_GET['viewleconge'])) {
+	$paginConge = (isset($_GET['pgConge'])?(int)$_GET['pgConge']:1);
+    $nbConge = $lecongeM->selectCongeCountById();
+    $nbPageConge = $lecongeM->selectCongeWithLimit($paginConge,NB_PG);
+    $PaginationConge = pagination::pagine($nbConge,NB_PG,$paginConge,"viewleconge&pgConge");
+	
+	echo $twig->render("leconge/leconge_afficherliste.html.twig", ['detailConge' => $nbPageConge,"pagination"=>$PaginationConge]);
+	
+}
+elseif (isset($_GET['updateleconge']) && ctype_digit($_GET['updateleconge']))
+{
+    echo $twig->render("leconge/leconge_modifier.html.twig", ['detailConge' => $lecongeM->lecongeSelectByld($_GET['updateleconge']), "sessions" => $lasessionM->sessionSelectALL()]);
+}
+elseif (isset($_GET['insertleconge']))
+{
+    echo $twig->render("leconge/leconge_ajouter.html.twig", ["sessions" => $lasessionM->sessionSelectALL()]);
+
+
+    //View le role
+} elseif (isset($_GET['viewlerole'])){
+    // page actuelle
+    $pageactu = (isset ($_GET['pg']))?(int)$_GET['pg']:1;
+    // nombre de rôles totaux à afficher
+    $nbRoles = $leroleM->selectRoleCountById();
+    // on va récupérer les rôles de la page actuelle
+
+    $articlesPageActu = $leroleM->selectRoleWithLimit($pageactu,3);
+
+
+    // création de la pagination
+    $affichePagination = pagination::pagine($nbRoles,3,$pageactu,"viewlerole&pg");
+
+
+    echo $twig->render('lerole/lerole_afficherliste.html.twig', [ "detailrole"=>$articlesPageActu,"pagination"=>$affichePagination]);
+
+
+
+    //insert un nouveau rôle
+} elseif(isset($_GET['insertLeRole'])){
+    if(!empty($_POST)){
+        $newLeRole = new lerole($_POST);
+        echo $twig->render('lerole/lerole_ajouter.html.twig',['lintitule'=>$leroleM->insertLerole($newLeRole)]);
+      header('Location: ./?viewlerole');
+>>>>>>> 21097d2ba34099ff381d8224d0d6e521fef5f088
         }
 //update un rôle
 
@@ -67,6 +119,7 @@ if (!empty($_GET)) {
             echo $twig->render('lerole/lerole_modifier.html.twig', ['section' => $leroleM->roleSelectById($_GET['updateLeRole'])]);
         }
 //delete le role
+<<<<<<< HEAD
     } elseif (isset($_GET['deleteLeRole']) && ctype_digit($_GET['deleteLeRole'])) {
         $idDeleteRole = (int) $_GET['deleteLeRole'];
         if (isset($_GET['ok'])) {
@@ -75,6 +128,36 @@ if (!empty($_GET)) {
 
         } else {
             echo $twig->render('lerole/lerole_delete.html.twig', ['id' => $idDeleteRole]);
+=======
+}elseif(isset($_GET['deleteLeRole']) && ctype_digit($_GET['deleteLeRole'])){
+    $idDeleteRole = (int)$_GET['deleteLeRole'];
+    if(isset($_GET['ok'])){
+        $leroleM->deleteLerole($idDeleteRole);
+        header("Location: ./?viewlerole");
+      
+      
+      }else{
+    echo $twig->render('lerole/lerole_delete.html.twig',['id'=>$idDeleteRole]);
+    }
+  
+  
+//linscription
+}elseif (isset($_GET["viewlinscription"])) {
+    $pageLinscription=(isset($_GET['pglinscription']))?(int)$_GET['pglinscription']:1;
+    $nbLinscription =$linscriptionM->selectLinscriptionCountById();
+    $vuelinscription =$linscriptionM->inscriptionAllSelectWithUser($pageLinscription,NB_PG);
+
+    $pagesLinsciption=pagination::pagine($nbLinscription,NB_PG,$pageLinscription,"viewlinscription&pglinscription");
+
+    echo $twig->render("linscription/linscription_afficherliste.html.twig", ['detailinscription' => $vuelinscription,"pagination"=>$pagesLinsciption]);
+
+}elseif (isset($_GET["ajouterlinscription"])) {
+    if(!empty($_POST)){
+        $newlinscription = new linscription($_POST);
+        s($_POST,$newlinscription);
+        // insertion
+        $insert=$linscriptionM->linscriptionCreate($newlinscription);
+>>>>>>> 21097d2ba34099ff381d8224d0d6e521fef5f088
         }
 
 //linscription
@@ -93,6 +176,7 @@ if (!empty($_GET)) {
         }
 
 //update linscription
+<<<<<<< HEAD
     } elseif (isset($_GET["updatelinscription"])) {
         echo $twig->render("linscription/linscription_modifier.html.twig", ['modifutilisateur' => $lutilisateurM->lutilisateurSelectAll(), 'modifutilisateur' => $lasessionM->sessionSelectALL()]);
 
@@ -101,6 +185,38 @@ if (!empty($_GET)) {
         $idDeletelinscription = (int) $_GET['deletelinscription'];
         if (isset($_GET['ok'])) {
             $linscriptionM->deletelinscription($idDeletelinscription);
+=======
+}elseif(isset($_GET['updatelinscription'])&& ctype_digit($_GET['updatelinscription'])) {
+    $testlinscription= (int) $_GET['updatelinscription'];
+    
+    if(isset($_POST["idlutilisateur"])){
+        
+$modifLinscription = new linscription($_POST);
+        $update=$linscriptionM->linscriptionModifier($modifLinscription);
+    
+        
+    }else{
+        s($linscriptionM->linscriptionSelectById($testlinscription),$lutilisateurM->lutilisateurSelectAll(),$lasessionM->sessionSelectALL());
+        echo $twig->render('linscription/linscription_modifier.html.twig',['modifUsers'=> $linscriptionM->linscriptionSelectById($testlinscription),
+        'detailUsers' => $lutilisateurM->lutilisateurSelectAll(), 'detailSession' => $lasessionM->sessionSelectALL()]);
+
+        
+    }
+
+
+//delete linscription
+}elseif(isset($_GET['deleteLinscription']) && ctype_digit($_GET['deleteLinscription'])){
+    $idDeleteLinscription = (int)$_GET['deleteLinscription'];
+    if(isset($_GET['ok'])){
+        $linscriptionM->deleteLinscription($idDeleteLinscription);
+        header("Location: ./?viewlinscription");
+      
+      
+      }else{
+    echo $twig->render('linscription/linscription_supprimer.html.twig',['id'=>$idDeleteLinscription]);
+}
+    
+>>>>>>> 21097d2ba34099ff381d8224d0d6e521fef5f088
 
         } else {
             echo $twig->render('', ['id' => $idDeletelinscription]);
@@ -183,6 +299,7 @@ if (!empty($_GET)) {
 
                 $role = (int) $_POST['role'];
 
+<<<<<<< HEAD
                 $insert = $lutilisateurM->lutilisateurCreate($newlutilisateur, $role);
 
                 if ($insert) {
@@ -195,6 +312,9 @@ if (!empty($_GET)) {
     }
 
 } else {
+=======
+}else{
+>>>>>>> 21097d2ba34099ff381d8224d0d6e521fef5f088
     // si on vient de se connecter la variable de session n'existe pas (donc affuchage du bandeau)
     if (!isset($_SESSION['bandeau'])) {
         $pourEntree = true;

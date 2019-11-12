@@ -11,10 +11,12 @@ if (isset($_POST['lenomutilisateur']) && isset($_POST['lemotdepasse'])) {
 } else if(isset($_GET['motdepasseoublier'])){
     $lutilisateurM = new lutilisateurManager($db_connect);
     $user = new lutilisateur($_POST);
+
     echo $twig->render("public/modepasseoublier.html.twig", ["motdepasse" => $lutilisateurM->motDePasseOublier($user)]);
 }else if(isset ($_GET['mail'])&& !empty($_GET['mail'])&& $utilisateurManager->checkMail(urldecode($_GET['mail']))){
-    $lutilisateurM = new lutilisateurManager($db_connect);
-    $user = new lutilisateur($_POST);
+
+    $uniqueid = $utilisateurManager->getUniqueId($_GET['mail'])['luniqueid'];
+
     echo urldecode($_GET['mail']);
     ini_set('SMTP', 'relay.skynet.be');
     ini_set('sendmail_from', 'DD@gmail.com'); // Nécessaire pour passer les vérifications du SMTP
@@ -22,7 +24,7 @@ if (isset($_POST['lenomutilisateur']) && isset($_POST['lemotdepasse'])) {
     $from = 'supportCF2M@gmail.com'; // Sous quel adresse email le récipient recevra le mail
     $fromName = 'supportCF2M'; // Quel nom le récipient verra dans sa boîte mail
     $subject = "TEST"; // Titre du mail
-    $message = "Please Click on the link here: <a href='http://localhost:63342/intranetCF2m/public/index.php' title='My Page'>My Page</a>"; // Message du mail
+    $message = "Please Click on the link here: <a href='localhost/intranetCF2m/public/?checkUniqueID&key=$uniqueid' title='My page'>Cliquer sur le lien pour changer votre mot de passe</a>"; // Message du mail
     $headers = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
     $headers .= 'From: ' . $fromName . '<' . $from . '>' . "\r\n";
@@ -35,10 +37,37 @@ if (isset($_POST['lenomutilisateur']) && isset($_POST['lemotdepasse'])) {
         echo "Echec de l'envoi du mail";
     }
     echo $twig->render("public/homepage.html.twig");
-} else {
+
+}else if( isset($_GET['checkUniqueID']) && isset($_GET['key']) ) {
+
+    //$recupIdPasswod = $utilisateurManager->checkPasswordInDb($_GET['key']);
+
+    echo $twig->render("public/newpassword.html.twig", ['key' => $_GET['key']]);
+
+    /*if( password_verify('1234', $recupIdPasswod['lemotdepasse']) ) {
+
+        $user =  new lutilisateur( $recupIdPasswod );
+
+        $recup = $utilisateurManager->changePassword($passwordUpdateID);
+        echo "Le mot de passe correspond ";
+
+    } else {
+
+        echo "Le mot de passe ne correspond pas";
+
+    }*/
+
+} elseif(isset($_POST['lemotdepasse']) && isset($_POST['luniqueid'])) {
+
+    $user = new lutilisateur($_POST);
+    $utilisateurManager->changePassword($user);
+    header("Location: ./");
+
+}
+ else {
   if(isset ($_GET['mail'])&& !empty($_GET['mail'])&& !$utilisateurManager->checkMail(urldecode($_GET['mail']))){
     echo '<div id="fade" class="alert-false"><span class="closebtn" onclick="this.partelement.style.display="none";">&times;</span>Ouups ! Ce mail n\'existe pas !</div>';
   }
-    $utilisateurManager = new lutilisateurManager($db_connect);
+
     echo $twig->render("public/homepage.html.twig");
 }

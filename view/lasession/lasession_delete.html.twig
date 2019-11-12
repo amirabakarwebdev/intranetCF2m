@@ -1,0 +1,48 @@
+
+{% extends "template.html.twig" %}
+
+
+{% block title %}
+    {{ parent() }}
+    | Admin | Supprimer un utilisateur
+{% endblock %}
+
+
+
+{% block milieu %}
+    <!-- Page Content -->
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="mt-5">Supprimer une session </h1>
+            </div>
+
+            <br><br><br> <br><br><br> <br><br><br>
+            <div
+                class="col-lg-6 text-left">
+                {# Affichage du formulaire #}
+                <h1>Confirmez la suppression de :</h1><br><br>
+
+
+                    <h4 class="mt-3">{{ affichesession.lenom }} | {{ affichesession.lannee }}</h4>
+                    <p>Acronyme : {{ affichesession.lacronyme }}</p>
+                    <p>Type session : {{ affichesession.letype == 1 ? "Pré-formation" : "Formation" }} | Filière : TODO | {% if(item.actif) %} Actif {% else %} non actif {% endif %}</p>
+                    <p>Début: {{ affichesession.debut }} | Fin: {{ affichesession.fin }}</p>
+
+
+                 <br><br>
+                    <a type="button" href="?confirmationdeletelasession={{ affichesession.idlasession }}&ok" class="btn btn-primary">Supprimer</a>
+
+                    <a type="button" href="?viewlasession" class="btn btn-secondary">Annuler</a>
+
+
+                <h3>{{ error }}</h3>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block bas %}
+    {% include "footer.html.twig" %}
+{% endblock %}
